@@ -15,7 +15,7 @@ Designed that each player starts with the same puzzle layout, like in Panel de P
 Can easily be adjusted to support a variety of other puzzle game styles
 
 INSTRUCTIONS:
-1. Create scripts named **scr_starterset** and **scr_drawset** (or rename them)
+1. Create scripts named **scr_starterset** and **scr_drawset** (or rename them). **scr_starterset** creates a data structure and fills it with random tiles, while **scr_drawset** is what draws them to the screen. They can be altered for independent use.
 2. Copy and paste the corresponding code into each script
 3. Create a new object, and execute script **scr_starterset** in the Create Event
     
