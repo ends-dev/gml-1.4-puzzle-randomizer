@@ -1,0 +1,73 @@
+//Game Maker Studio 2 changed how scripts are handled
+//if porting to Studio 2 or higher, uncomment the line immediately below, and the closing brace at the bottom of the script
+//function scr_starterset() {
+
+	//creates a data structure for the puzzle grid
+	//the default is 6x12
+	//dimensions can be changed, but it will affect a few lines below
+	global.starterset = ds_grid_create(6,12);
+	
+	//sets the values of the grid to -1 by default
+	ds_grid_clear(global.starterset, -1);
+
+	//declare local variables
+	//test_x: the x coordinate in global.starterset
+	//test_y: the y coordinate in global.starterset
+	//fill_no: chooses a number of tiles to fill in a given column segment
+	//left_tile: the value of the tile to the left of the current one
+	//up_tile: the value of the tile above the current one
+	var test_x, test_y, fill_no, left_tile, up_tile, temp_tile;
+  
+	//starts with a default column size
+	//values can be changed based on grid size and tile frequency
+	fill_no = choose(0,1,2,3,3,3,4,4,4,4,5,6);
+  
+	//runs through and sets the x coordinate tiles
+	for (test_x = 0; test_x < 6; test_x += 1)
+	{   
+  
+		//runs through and sets the y coordinate tiles, starting at the top
+		//uses fill_no value to determine the top of the column
+		for (test_y = fill_no; test_y > -1; test_y -= 1)
+		{
+          
+			//checks the tile to the left of the current position
+			//if the current x position in the data structure is zero, it sets left_tile to -1
+			if (test_x - 1) > -1 
+			{
+				left_tile = ds_grid_get(global.starterset, (test_x - 1), test_y);
+
+			}        
+			else
+			{
+				left_tile = -1;
+			}
+         
+			//checks the tile above the current one
+			//if there is no tile above, the coordinate will be set to -1 due to ds_grid_clear being run at the start of the script
+			up_tile = ds_grid_get(global.starterset, test_x, (test_y + 1));
+
+				//make sure the tiles above and to the left of the current tile do not match
+				//this prevents the starting grid from triggering matches
+				{
+				do
+					{
+                  
+					//chooses a random tile object to be compared
+					//each instance of obj_tile must be replaced with the actual name of each tile object in the project
+					//this example uses 6 different tile variants, but it works with more or fewer
+					temp_tile = choose(obj_tile1, obj_tile2, obj_tile3, obj_tile4, obj_tile5, obj_tile6);
+					}
+					
+				until (temp_tile != left_tile) && (temp_tile != up_tile);
+				}
+              
+				//finally, set the current grid coordinate with the generated tile value in temp_tile
+				ds_grid_set(global.starterset, test_x, test_y, temp_tile);
+		}
+      
+		//sets a new column size for the next column to be generated
+		fill_no = choose(0,1,2,3,3,3,4,4,4,4,5,6);
+	}
+
+//}
