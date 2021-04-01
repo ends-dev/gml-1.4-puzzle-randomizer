@@ -1,0 +1,34 @@
+//Game Maker Studio 2 changed how scripts are handled
+//if porting to Studio 2 or higher, uncomment the line immediately below, and the closing brace at the bottom of the script
+//function scr_drawset() {
+
+//references variable **tileset** which should be declared in the same object as the script is executed, and set as equal to **global.starterset**
+//**tileset** can also be replaced in this script with **global.starterset** for games with only one player
+//in multiplayer games, the **tileset** variable in each player object ensures each player can make independent changes to their own tile grid, but starts with the same, fair layout
+
+	//declares local variables
+	//start_x: the starting x coordinate in the grid
+	//start_y: the starting y coordinate in the grid
+	var start_x, start_y;
+	
+	//runs through the rows
+	for (start_x = 0; start_x < 6; start_x += 1)
+	{
+		//runs through the columns
+		for (start_y = 0; start_y < 6; start_y += 1)
+		{
+			
+			//verifies that each coordinate doesn't return the value -1, which would mean it's an empty space in the grid
+			if ds_grid_get(tileset, start_x, start_y) != -1
+			{
+				
+				//creates an instance of the current tile at the correct location
+				//the origin defaults to the bottom-left corner, and draws up
+				//this defaults to tiles 18x18 and should be changed according to the correct tile size, if necessary
+				instance_create(x + (18 * start_x), y - (18 * start_y), ds_grid_get(tileset, start_x, start_y))
+
+			}
+		}
+	}
+
+//}
